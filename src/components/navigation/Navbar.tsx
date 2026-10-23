@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation, Link } from 'react-router-dom';
-import { ChevronDown, Sparkles, Compass, Award, Heart, Building, BookOpen, GraduationCap, ArrowRight, Calendar, ExternalLink, ShieldCheck } from 'lucide-react';
+import { ChevronDown, Sparkles, Compass, Award, Heart, Building, BookOpen, GraduationCap, ArrowRight } from 'lucide-react';
 import { NAVIGATION_ITEMS, NavigationItem } from '../../data/schoolConfig';
 import { SchoolLogo } from './SchoolLogo';
 import { Button } from '../common/Button';
@@ -145,90 +145,93 @@ export const Navbar: React.FC = () => {
 
                     {/* Rich Mega-Dropdown with Extra Component */}
                     {isDropdownOpen && (
-                      <div
-                        className="absolute left-0 mt-1 w-[620px] bg-white rounded-2xl shadow-elevated border border-slate-200/90 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150 grid grid-cols-12 gap-4"
-                        role="menu"
-                      >
-                        {/* Left Column: Menu Links (7 cols) */}
-                        <div className="col-span-7 space-y-1">
-                          <div className="text-[11px] font-extrabold uppercase tracking-wider text-charcoal-400 px-3 py-1 mb-1 border-b border-slate-100 flex items-center justify-between">
-                            <span>{item.label} Directory</span>
-                            <span className="text-gold-600 font-semibold lowercase">gdgoenkapatna</span>
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[620px] z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                        {/* Hover bridge wrapper ensures mouse doesn't fall off the gap */}
+                        <div
+                          className="bg-white rounded-2xl shadow-elevated border border-slate-200/90 p-4 grid grid-cols-12 gap-4"
+                          role="menu"
+                        >
+                          {/* Left Column: Menu Links (7 cols) */}
+                          <div className="col-span-7 space-y-1">
+                            <div className="text-[11px] font-extrabold uppercase tracking-wider text-charcoal-400 px-3 py-1 mb-1 border-b border-slate-100 flex items-center justify-between">
+                              <span>{item.label} Directory</span>
+                              <span className="text-gold-600 font-semibold lowercase">gdgoenkapatna</span>
+                            </div>
+
+                            {item.children?.map((child) => (
+                              <NavLink
+                                key={child.href}
+                                to={child.href}
+                                role="menuitem"
+                                className={({ isActive }) =>
+                                  `flex items-start gap-3 p-2.5 rounded-xl text-xs transition-all ${
+                                    isActive
+                                      ? 'bg-royal-50/90 text-royal-700 font-semibold border-l-4 border-royal-600 shadow-subtle'
+                                      : 'text-charcoal-800 hover:bg-surface-100 hover:text-navy-900'
+                                  }`
+                                }
+                              >
+                                <div className="p-2 rounded-lg bg-surface-200 shrink-0 mt-0.5">
+                                  {getDropdownIcon(child.icon)}
+                                </div>
+                                <div className="flex-1">
+                                  <div className="font-bold text-sm text-navy-900 leading-snug">
+                                    {child.label}
+                                  </div>
+                                  {child.subtext && (
+                                    <div className="text-[11px] text-charcoal-500 font-normal mt-0.5 leading-tight">
+                                      {child.subtext}
+                                    </div>
+                                  )}
+                                </div>
+                              </NavLink>
+                            ))}
                           </div>
 
-                          {item.children?.map((child) => (
-                            <NavLink
-                              key={child.href}
-                              to={child.href}
-                              role="menuitem"
-                              className={({ isActive }) =>
-                                `flex items-start gap-3 p-2.5 rounded-xl text-xs transition-all ${
-                                  isActive
-                                    ? 'bg-royal-50/90 text-royal-700 font-semibold border-l-4 border-royal-600 shadow-subtle'
-                                    : 'text-charcoal-800 hover:bg-surface-100 hover:text-navy-900'
-                                }`
-                              }
-                            >
-                              <div className="p-2 rounded-lg bg-surface-200 shrink-0 mt-0.5">
-                                {getDropdownIcon(child.icon)}
-                              </div>
-                              <div className="flex-1">
-                                <div className="font-bold text-sm text-navy-900 leading-snug">
-                                  {child.label}
+                          {/* Right Column: Extra Featured Component Card (5 cols) */}
+                          <div className="col-span-5 bg-surface-100 rounded-xl p-3.5 border border-slate-200/80 flex flex-col justify-between">
+                            {item.extraCard ? (
+                              <>
+                                <div>
+                                  {item.extraCard.image && (
+                                    <div className="relative h-28 rounded-lg overflow-hidden mb-2.5 bg-slate-200">
+                                      <img
+                                        src={item.extraCard.image}
+                                        alt={item.extraCard.title}
+                                        className="w-full h-full object-cover"
+                                      />
+                                      {item.extraCard.badge && (
+                                        <div className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-navy-950/90 text-gold-400 backdrop-blur-sm">
+                                          {item.extraCard.badge}
+                                        </div>
+                                      )}
+                                    </div>
+                                  )}
+                                  <h4 className="text-sm font-bold text-navy-900 font-heading mb-1">
+                                    {item.extraCard.title}
+                                  </h4>
+                                  <p className="text-[11px] text-charcoal-600 leading-relaxed">
+                                    {item.extraCard.subtitle}
+                                  </p>
                                 </div>
-                                {child.subtext && (
-                                  <div className="text-[11px] text-charcoal-500 font-normal mt-0.5 leading-tight">
-                                    {child.subtext}
-                                  </div>
-                                )}
-                              </div>
-                            </NavLink>
-                          ))}
-                        </div>
 
-                        {/* Right Column: Extra Featured Component Card (5 cols) */}
-                        <div className="col-span-5 bg-surface-100 rounded-xl p-3.5 border border-slate-200/80 flex flex-col justify-between">
-                          {item.extraCard ? (
-                            <>
-                              <div>
-                                {item.extraCard.image && (
-                                  <div className="relative h-28 rounded-lg overflow-hidden mb-2.5 bg-slate-200">
-                                    <img
-                                      src={item.extraCard.image}
-                                      alt={item.extraCard.title}
-                                      className="w-full h-full object-cover"
-                                    />
-                                    {item.extraCard.badge && (
-                                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-navy-950/90 text-gold-400 backdrop-blur-sm">
-                                        {item.extraCard.badge}
-                                      </div>
-                                    )}
-                                  </div>
-                                )}
-                                <h4 className="text-sm font-bold text-navy-900 font-heading mb-1">
-                                  {item.extraCard.title}
-                                </h4>
-                                <p className="text-[11px] text-charcoal-600 leading-relaxed">
-                                  {item.extraCard.subtitle}
-                                </p>
+                                <div className="pt-3 border-t border-slate-200/70 mt-2">
+                                  <Link
+                                    to={item.extraCard.buttonHref}
+                                    className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-navy-900 hover:bg-royal-600 text-white text-xs font-bold transition-colors shadow-subtle"
+                                  >
+                                    <span>{item.extraCard.buttonText}</span>
+                                    <ArrowRight className="w-3.5 h-3.5" />
+                                  </Link>
+                                </div>
+                              </>
+                            ) : (
+                              <div className="p-4 text-center">
+                                <h5 className="font-bold text-sm text-navy-900">G D Goenka Public School Patna</h5>
+                                <p className="text-xs text-charcoal-500 mt-1">Saguna More, Khagaul Road</p>
                               </div>
-
-                              <div className="pt-3 border-t border-slate-200/70 mt-2">
-                                <Link
-                                  to={item.extraCard.buttonHref}
-                                  className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-navy-900 hover:bg-royal-600 text-white text-xs font-bold transition-colors shadow-subtle"
-                                >
-                                  <span>{item.extraCard.buttonText}</span>
-                                  <ArrowRight className="w-3.5 h-3.5" />
-                                </Link>
-                              </div>
-                            </>
-                          ) : (
-                            <div className="p-4 text-center">
-                              <h5 className="font-bold text-sm text-navy-900">G D Goenka Public School Patna</h5>
-                              <p className="text-xs text-charcoal-500 mt-1">Saguna More, Khagaul Road</p>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     )}
