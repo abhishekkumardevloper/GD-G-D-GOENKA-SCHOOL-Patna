@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#102747" />
+      <stop offset="100%" stop-color="#0B1C33" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D8B86E" />
+      <stop offset="100%" stop-color="#C7A45A" />
+    </linearGradient>
+  </defs>
+  <!-- Shield outline -->
+  <path d="M32 4 L56 12 V34 C56 46 45 56 32 60 C19 56 8 46 8 34 V12 Z" fill="url(#shieldGrad)" stroke="url(#goldGrad)" stroke-width="2.5" />
+  <!-- Inner border -->
+  <path d="M32 9 L51 16 V33 C51 43 42 51.5 32 55 C22 51.5 13 43 13 33 V16 Z" fill="none" stroke="#C7A45A" stroke-opacity="0.3" stroke-width="1.2" />
+  <!-- GD Letters Monogram -->
+  <text x="32" y="38" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="20" font-weight="800" fill="url(#goldGrad)" text-anchor="middle" letter-spacing="1">GD</text>
+  <!-- Tiny star accent -->
+  <polygon points="32,16 33.5,20.5 38,20.5 34.5,23 36,27.5 32,25 28,27.5 29.5,23 26,20.5 30.5,20.5" fill="#C7A45A" />
+</svg>
