@@ -59,31 +59,36 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 bg-white/98 backdrop-blur-md transition-all duration-300 border-b ${
+        className={`sticky top-0 z-40 bg-white/98 backdrop-blur-md transition-all duration-300 border-b w-full max-w-[100vw] ${
           scrolled
             ? 'shadow-elevated border-slate-200/90 py-1'
             : 'shadow-subtle border-slate-200 py-1.5'
         }`}
       >
         {/* Top Gold Accent Line */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-gold-400 via-royal-600 to-gold-500 opacity-90" />
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-gold-400 via-royal-600 to-gold-500 opacity-90" />
 
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="flex items-center justify-between h-20 gap-2">
-            {/* School Crest & Logo */}
-            <div className="shrink-0">
-              <SchoolLogo size={scrolled ? 'sm' : 'md'} />
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="flex items-center justify-between w-full h-20 gap-2 sm:gap-4">
+            
+            {/* School Crest & Logo - Force limits on mobile to prevent pushing buttons out */}
+            <div className="flex items-center shrink min-w-0 max-w-[65%] sm:max-w-none">
+              {/* Optional: Add scale origin if the logo refuses to shrink natively */}
+              <div className="transform origin-left scale-90 sm:scale-100 flex-shrink min-w-0 [&>img]:max-w-full [&>svg]:max-w-full">
+                <SchoolLogo size={scrolled ? 'sm' : 'md'} />
+              </div>
             </div>
 
             {/* Desktop Navigation Links */}
             <nav
               ref={dropdownRef}
-              className="hidden lg:flex items-center space-x-0.5 xl:space-x-1"
+              className="hidden lg:flex items-center space-x-0.5 xl:space-x-1 shrink-0"
               aria-label="Main Navigation"
             >
-              {NAVIGATION_ITEMS.map((item) => {
+              {NAVIGATION_ITEMS.map((item, index, arr) => {
                 const hasChildren = item.children && item.children.length > 0;
                 const isDropdownOpen = openDropdown === item.label;
+                const isRightAligned = index >= arr.length / 2;
 
                 if (!hasChildren) {
                   return (
@@ -91,7 +96,7 @@ export const Navbar: React.FC = () => {
                       key={item.href}
                       to={item.href}
                       className={({ isActive }) =>
-                        `relative px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 ${
+                        `relative px-2 xl:px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 ${
                           isActive
                             ? 'text-royal-600 bg-royal-50/90 shadow-subtle'
                             : 'text-charcoal-900 hover:text-navy-950 hover:bg-slate-100'
@@ -110,7 +115,6 @@ export const Navbar: React.FC = () => {
                   );
                 }
 
-                // Dropdown link container
                 const isCurrentGroupActive = item.children?.some(
                   (c) => location.pathname === c.href
                 );
@@ -126,7 +130,7 @@ export const Navbar: React.FC = () => {
                       type="button"
                       onClick={() => handleDropdownToggle(item.label)}
                       aria-expanded={isDropdownOpen}
-                      className={`flex items-center gap-1 px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer ${
+                      className={`flex items-center gap-1 px-2 xl:px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer ${
                         isCurrentGroupActive
                           ? 'text-royal-600 bg-royal-50/90 shadow-subtle'
                           : 'text-charcoal-900 hover:text-navy-950 hover:bg-slate-100'
@@ -143,15 +147,16 @@ export const Navbar: React.FC = () => {
                       )}
                     </button>
 
-                    {/* Rich Mega-Dropdown with Extra Component */}
+                    {/* Rich Mega-Dropdown */}
                     {isDropdownOpen && (
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[620px] z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                        {/* Hover bridge wrapper ensures mouse doesn't fall off the gap */}
+                      <div className={`absolute top-full pt-2 w-[620px] z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${
+                        isRightAligned ? 'right-0' : 'left-0'
+                      }`}>
                         <div
                           className="bg-white rounded-2xl shadow-elevated border border-slate-200/90 p-4 grid grid-cols-12 gap-4"
                           role="menu"
                         >
-                          {/* Left Column: Menu Links (7 cols) */}
+                          {/* Left Column: Menu Links */}
                           <div className="col-span-7 space-y-1">
                             <div className="text-[11px] font-extrabold uppercase tracking-wider text-charcoal-400 px-3 py-1 mb-1 border-b border-slate-100 flex items-center justify-between">
                               <span>{item.label} Directory</span>
@@ -188,7 +193,7 @@ export const Navbar: React.FC = () => {
                             ))}
                           </div>
 
-                          {/* Right Column: Extra Featured Component Card (5 cols) */}
+                          {/* Right Column: Featured Card */}
                           <div className="col-span-5 bg-surface-100 rounded-xl p-3.5 border border-slate-200/80 flex flex-col justify-between">
                             {item.extraCard ? (
                               <>
@@ -240,7 +245,7 @@ export const Navbar: React.FC = () => {
               })}
             </nav>
 
-            {/* Desktop CTA Button (Always Prominently Visible) */}
+            {/* Desktop CTA Button */}
             <div className="hidden lg:flex items-center shrink-0">
               <Button
                 to="/admissions"
@@ -253,13 +258,13 @@ export const Navbar: React.FC = () => {
               </Button>
             </div>
 
-            {/* Mobile View Hamburger & Quick Apply */}
-            <div className="flex lg:hidden items-center gap-2">
+            {/* Mobile View Hamburger & Quick Apply - Safely contained inside bounds */}
+            <div className="flex lg:hidden items-center justify-end gap-1.5 sm:gap-2 shrink-0">
               <Button
                 to="/admissions"
                 variant="primary-gold"
                 size="sm"
-                className="text-xs px-3 py-1.5 font-bold shadow-subtle"
+                className="text-[11px] sm:text-xs px-2.5 py-1.5 font-bold shadow-subtle whitespace-nowrap"
               >
                 Apply
               </Button>
@@ -267,11 +272,11 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2.5 rounded-lg text-charcoal-800 hover:text-navy-900 hover:bg-surface-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 border border-slate-200"
+                className="p-1.5 sm:p-2 rounded-lg text-charcoal-800 hover:text-navy-900 hover:bg-surface-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 border border-slate-200"
                 aria-expanded={mobileMenuOpen}
                 aria-label="Toggle Navigation Menu"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {mobileMenuOpen ? (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
                   ) : (
