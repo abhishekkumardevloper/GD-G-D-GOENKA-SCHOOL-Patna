@@ -59,7 +59,7 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 bg-white/98 backdrop-blur-md transition-all duration-300 border-b w-full max-w-[100vw] ${
+        className={`sticky top-0 z-40 bg-white/98 backdrop-blur-md transition-all duration-300 border-b w-full ${
           scrolled
             ? 'shadow-elevated border-slate-200/90 py-1'
             : 'shadow-subtle border-slate-200 py-1.5'
@@ -71,10 +71,9 @@ export const Navbar: React.FC = () => {
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between w-full h-20 gap-2 sm:gap-4">
             
-            {/* School Crest & Logo - Force limits on mobile to prevent pushing buttons out */}
-            <div className="flex items-center shrink min-w-0 max-w-[65%] sm:max-w-none">
-              {/* Optional: Add scale origin if the logo refuses to shrink natively */}
-              <div className="transform origin-left scale-90 sm:scale-100 flex-shrink min-w-0 [&>img]:max-w-full [&>svg]:max-w-full">
+            {/* School Crest & Logo - Flex-1 allows it to take space but min-w-0 prevents it from breaking flexbox bounds */}
+            <div className="flex items-center flex-1 min-w-0">
+              <div className="transform origin-left scale-90 sm:scale-100 flex shrink min-w-0 [&>img]:max-w-full [&>svg]:max-w-full">
                 <SchoolLogo size={scrolled ? 'sm' : 'md'} />
               </div>
             </div>
@@ -88,7 +87,7 @@ export const Navbar: React.FC = () => {
               {NAVIGATION_ITEMS.map((item, index, arr) => {
                 const hasChildren = item.children && item.children.length > 0;
                 const isDropdownOpen = openDropdown === item.label;
-                const isRightAligned = index >= arr.length / 2;
+                const isRightAligned = index >= arr.length / 2; // Aligns right-side menus to prevent screen overflow
 
                 if (!hasChildren) {
                   return (
