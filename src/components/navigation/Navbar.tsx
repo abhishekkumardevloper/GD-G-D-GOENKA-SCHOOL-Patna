@@ -68,12 +68,12 @@ export const Navbar: React.FC = () => {
         {/* Top Gold Accent Line */}
         <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-gold-400 via-royal-600 to-gold-500 opacity-90" />
 
-        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="flex items-center justify-between w-full h-20 gap-2 sm:gap-4">
+        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="flex items-center justify-between w-full h-20 gap-2 lg:gap-4 xl:gap-8">
             
-            {/* School Crest & Logo - Flex-1 allows it to take space but min-w-0 prevents it from breaking flexbox bounds */}
-            <div className="flex items-center flex-1 min-w-0">
-              <div className="transform origin-left scale-90 sm:scale-100 flex shrink min-w-0 [&>img]:max-w-full [&>svg]:max-w-full">
+            {/* School Crest & Logo - Set to flex-none to prevent shrinking/growing issues */}
+            <div className="flex items-center flex-none">
+              <div className="transform origin-left scale-90 sm:scale-100 flex-none [&>img]:max-w-full [&>svg]:max-w-full">
                 <SchoolLogo size={scrolled ? 'sm' : 'md'} />
               </div>
             </div>
@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
             {/* Desktop Navigation Links */}
             <nav
               ref={dropdownRef}
-              className="hidden lg:flex items-center space-x-0.5 xl:space-x-1 shrink-0"
+              className="hidden lg:flex items-center space-x-0 lg:space-x-0.5 xl:space-x-1 shrink-0"
               aria-label="Main Navigation"
             >
               {NAVIGATION_ITEMS.map((item, index, arr) => {
@@ -95,7 +95,7 @@ export const Navbar: React.FC = () => {
                       key={item.href}
                       to={item.href}
                       className={({ isActive }) =>
-                        `relative px-2 xl:px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 ${
+                        `relative px-1.5 lg:px-2 xl:px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 whitespace-nowrap ${
                           isActive
                             ? 'text-royal-600 bg-royal-50/90 shadow-subtle'
                             : 'text-charcoal-900 hover:text-navy-950 hover:bg-slate-100'
@@ -129,7 +129,7 @@ export const Navbar: React.FC = () => {
                       type="button"
                       onClick={() => handleDropdownToggle(item.label)}
                       aria-expanded={isDropdownOpen}
-                      className={`flex items-center gap-1 px-2 xl:px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer ${
+                      className={`flex items-center gap-1 px-1.5 lg:px-2 xl:px-3 py-2 rounded-lg text-[13px] xl:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer whitespace-nowrap ${
                         isCurrentGroupActive
                           ? 'text-royal-600 bg-royal-50/90 shadow-subtle'
                           : 'text-charcoal-900 hover:text-navy-950 hover:bg-slate-100'
@@ -137,7 +137,7 @@ export const Navbar: React.FC = () => {
                     >
                       <span>{item.label}</span>
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${
                           isDropdownOpen ? 'rotate-180 text-gold-500' : 'text-charcoal-500'
                         }`}
                       />
@@ -250,7 +250,7 @@ export const Navbar: React.FC = () => {
                 to="/admissions"
                 variant="primary-gold"
                 size="md"
-                className="shadow-gold-glow text-xs xl:text-sm font-extrabold tracking-wide px-4 py-2.5 whitespace-nowrap"
+                className="shadow-gold-glow text-[13px] xl:text-sm font-extrabold tracking-wide px-3 xl:px-4 py-2.5 whitespace-nowrap"
                 leftIcon={<Sparkles className="w-4 h-4 text-navy-950" />}
               >
                 Admissions Enquiry
